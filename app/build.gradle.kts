@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization") version "1.9.23"
 }
 
 android {
@@ -59,6 +60,39 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+
+    //retrofit implementation
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    //Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    //dependency injection
+    implementation("com.google.dagger:dagger:2.44")
+    annotationProcessor ("com.google.dagger:dagger-compiler:2.51")
+
+    //Koin
+    implementation("io.insert-koin:koin-android:3.2.0")
+
+    //gson converter factory
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    //viewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
+    //recycler_view
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+
+    //constraint layout
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    //card view
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    //search view
+    implementation("androidx.appcompat:appcompat:1.6.1")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
