@@ -20,18 +20,19 @@ class MovieListViewModel @Inject constructor(private val getMoviesUseCase: GetMo
     }
 
     private fun getData() {
-        val list = getMoviesUseCase()
+        val data = getMoviesUseCase()
 
-        list.onEach { result ->
+        data.onEach { result ->
             when(result) {
-                is Resource.Success ->
-                    _state.value = MovieListState(movies = result.data?: emptyList())
-
-                is Resource.Error ->
-                    _state.value = MovieListState(error = result.message?:"Error at view Model")
-
-                is Resource.Loading ->
+                is Resource.Success -> {
+                    _state.value = MovieListState(movies = result.data ?: emptyList())
+                }
+                is Resource.Error -> {
+                    _state.value = MovieListState(error = result.message ?: "Error at view Model")
+                }
+                is Resource.Loading -> {
                     _state.value = MovieListState(isLoading = true)
+                }
             }
         }.launchIn(viewModelScope)
     }
