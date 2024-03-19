@@ -11,7 +11,7 @@ import com.example.movielist.domain.model.MovieList
 class AdopterClass(private var dataList: List<MovieList>): RecyclerView.Adapter<AdopterClass.ViewHolderClass>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
-        val itemView =LayoutInflater.from(parent.context).inflate(R.layout.item_layout,parent)
+        val itemView =LayoutInflater.from(parent.context).inflate(R.layout.item_layout,parent,false)
         return ViewHolderClass(itemView)
     }
 

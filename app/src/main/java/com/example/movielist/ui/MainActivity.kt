@@ -25,11 +25,24 @@ class MainActivity : ComponentActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var dataList: List<MovieList>
     private lateinit var adapter:AdopterClass
+
+    private var dummyList: List<MovieList> = listOf(
+        MovieList(true,"en","B","s","tru","12",2.9),
+        MovieList(true,"en","B","s","tru","12",2.9),
+        MovieList(true,"en","B","s","tru","12",2.9),
+        MovieList(true,"en","B","s","tru","12",2.9),
+        MovieList(true,"en","B","s","tru","12",2.9),
+        MovieList(true,"en","B","s","tru","12",2.9),
+        MovieList(true,"en","B","s","tru","12",2.9),
+        MovieList(true,"en","B","s","tru","12",2.9),
+
+
+        )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = AdopterClass(emptyList())
+        adapter = AdopterClass(dummyList)
         recyclerView=findViewById(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter

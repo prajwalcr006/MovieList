@@ -2,6 +2,7 @@ package com.example.movielist.data.repository
 
 import android.net.http.HttpException
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresExtension
 import com.example.cryptocurrencyapp.common.Resource
 import com.example.movielist.data.remote.MovieListApi
@@ -18,7 +19,11 @@ class MovieRepositoryImpl @Inject constructor(private val movieListApi: MovieLis
     override suspend fun getMovieList(): Resource<List<MovieList>> {
 
         return try {
-            val list = movieListApi.getMovies().results.map { elements-> elements.toMovieList()}
+            val rawList = movieListApi.getMovies().results
+
+            Log.d("debugRepo",rawList[0].toString()?:"No message")
+
+            val list = rawList.map { elements-> elements.toMovieList()}
             Resource.Success(list)
         } catch (e: HttpException) {
             Resource.Error(e.message?:"Unexpected error")

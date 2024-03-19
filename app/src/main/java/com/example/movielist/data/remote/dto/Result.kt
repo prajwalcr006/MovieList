@@ -14,24 +14,24 @@ data class Result(
     val genreIds: List<Int>,
     @SerialName("id")
     val id: Int,
-    @SerialName("original_language")
-    val originalLanguage: String,
+
+    val original_language: String,
     @SerialName("original_title")
     val originalTitle: String,
     @SerialName("overview")
     val overview: String,
     @SerialName("popularity")
     val popularity: Double,
-    @SerialName("poster_path")
-    val posterPath: String,
-    @SerialName("release_date")
-    val releaseDate: String,
+
+    val poster_path: String,
+
+    val release_date: String,
     @SerialName("title")
     val title: String,
     @SerialName("video")
     val video: Boolean,
-    @SerialName("vote_average")
-    val voteAverage: Double,
+
+    val vote_average: Double,
     @SerialName("vote_count")
     val voteCount: Int
 )

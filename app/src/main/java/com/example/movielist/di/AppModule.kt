@@ -21,11 +21,11 @@ val appModule = module {
             .create(MovieListApi::class.java)
     }
 
-    factory<MovieRepository> {
+    single<MovieRepository> {
         MovieRepositoryImpl(get())
     }
 
-    single {
+    factory {
         GetMoviesUseCase(get())
     }
 
