@@ -7,11 +7,32 @@
     tools:context=".ui.MainActivity">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id = "@+id/recyclerview"
-        android:layout_marginTop="12dp"/>
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="184dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="177dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="176dp"
+        android:layout_marginBottom="692dp"
+        android:text="Movie List"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.example.movielist.ui.ListFragment"
+        android:layout_width="414dp"
+        android:layout_height="604dp"
+        android:layout_marginTop="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

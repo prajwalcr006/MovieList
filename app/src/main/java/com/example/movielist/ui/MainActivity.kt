@@ -1,5 +1,6 @@
 package com.example.movielist.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,44 +21,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.startKoin
 
 class MainActivity : ComponentActivity() {
-
-    private val movieListViewModel:MovieListViewModel by viewModel()
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var dataList: List<MovieList>
-    private lateinit var adapter:AdopterClass
-
-    private var dummyList: List<MovieList> = listOf(
-        MovieList(true,"en","B","s","tru","12",2.9),
-        MovieList(true,"en","B","s","tru","12",2.9),
-        MovieList(true,"en","B","s","tru","12",2.9),
-        MovieList(true,"en","B","s","tru","12",2.9),
-        MovieList(true,"en","B","s","tru","12",2.9),
-        MovieList(true,"en","B","s","tru","12",2.9),
-        MovieList(true,"en","B","s","tru","12",2.9),
-        MovieList(true,"en","B","s","tru","12",2.9),
-
-
-        )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        adapter = AdopterClass(dummyList)
-        recyclerView=findViewById(R.id.recyclerview)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-
-        observer()
-
+        val intent = Intent(this,FragmentActivity::class.java)
+        startActivity(intent)
     }
-
-    fun observer() {
-        movieListViewModel.state.observe(this,{state->
-            adapter.update(state.movies)
-        })
-    }
-
-
-    }
+}
 
 
