@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movielist.R
 import com.example.movielist.domain.model.MovieList
 
-class AdopterClass(private var dataList: List<MovieList>): RecyclerView.Adapter<AdopterClass.ViewHolderClass>() {
+class AdopterClass(private var dataList: List<MovieList>, val itemClickListner:ItemClickListner): RecyclerView.Adapter<AdopterClass.ViewHolderClass>() {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView =LayoutInflater.from(parent.context).inflate(R.layout.item_layout,parent,false)
@@ -23,6 +25,9 @@ class AdopterClass(private var dataList: List<MovieList>): RecyclerView.Adapter<
         val currentItem = dataList[position]
         holder.rvTitle.text = currentItem.title
         holder.rvLanguage.text = currentItem.originalLanguage
+        holder.itmView.setOnClickListener {
+            itemClickListner.onItemClick(currentItem)
+        }
     }
 
     fun update(list: List<MovieList>) {
@@ -33,6 +38,11 @@ class AdopterClass(private var dataList: List<MovieList>): RecyclerView.Adapter<
     class ViewHolderClass(private val itemView: View): RecyclerView.ViewHolder(itemView) {
         val rvTitle: TextView = itemView.findViewById(R.id.title)
         val rvLanguage: TextView = itemView.findViewById(R.id.original_language)
+        val itmView = itemView
+    }
+
+    interface ItemClickListner {
+        fun onItemClick(movieList: MovieList)
     }
 
 }

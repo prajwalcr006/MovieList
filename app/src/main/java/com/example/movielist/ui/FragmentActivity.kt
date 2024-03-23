@@ -2,11 +2,14 @@ package com.example.movielist.ui
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.ListFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movielist.R
@@ -15,20 +18,46 @@ import com.example.movielist.ui.movie_list.MovieListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FragmentActivity: AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 
-
 }
+
+
 
 class DetailFragment: Fragment() {
 
+    private lateinit var myParams: MovieList
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.detail_fragment,container,false)
+        myParams = arguments?.getParcelable<MovieList>("movieList")!!
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val title: TextView = view.findViewById(R.id.film_title)
+        val overview: TextView = view.findViewById(R.id.film_description)
+        val language: TextView = view.findViewById(R.id.film_language)
+        val releaseDate: TextView = view.findViewById(R.id.film_release_date)
+        val voteAverage: TextView = view.findViewById(R.id.film_vote_avg)
+
+        title.text = myParams.title
+        overview.text = myParams.overview
+        language.text = myParams.originalLanguage
+        releaseDate.text = myParams.releaseDate
+        voteAverage.text = myParams.voteAverage.toString()
+    }
 }
 
-class ListFragment: Fragment() {
+class ListFragment: Fragment(),AdopterClass.ItemClickListner {
     private val movieListViewModel:MovieListViewModel by viewModel()
     private lateinit var recyclerView: RecyclerView
     private lateinit var dataList: List<MovieList>
@@ -39,6 +68,8 @@ class ListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.list_fragment,container,false)
+
+        adapter = AdopterClass(emptyList(),this)
         recyclerView = view.findViewById(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -56,5 +87,21 @@ class ListFragment: Fragment() {
         movieListViewModel.state.observe(viewLifecycleOwner,{state->
             adapter.update(state.movies)
         })
+    }
+
+    override fun onItemClick(movieList: MovieList) {
+        val bundle = Bundle()
+        bundle.putParcelable("movieList",movieList)
+
+        val detailFragment = DetailFragment()
+        detailFragment.arguments = bundle
+
+
+
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragmentManager.beginTransaction()
+            .replace(R.id.fragment_container,detailFragment)
+            .addToBackStack(null)
+            .commit()
     }
 }
