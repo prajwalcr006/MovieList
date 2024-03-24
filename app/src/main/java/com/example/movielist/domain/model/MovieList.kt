@@ -37,7 +37,9 @@ data class MovieList(
         return 0
     }
 
-    companion object CRATER: Parcelable.Creator<MovieList> {
+
+
+    companion object CREATOR : Parcelable.Creator<MovieList> {
         override fun createFromParcel(parcel: Parcel?): MovieList {
             return if(parcel!=null)
                 MovieList(parcel)
@@ -48,6 +50,5 @@ data class MovieList(
         override fun newArray(size: Int): Array<MovieList?> {
             return arrayOfNulls(size)
         }
-
     }
 }

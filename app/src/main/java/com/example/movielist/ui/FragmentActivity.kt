@@ -109,7 +109,6 @@ class ListFragment: Fragment(),AdopterClass.ItemClickListner {
 
     fun observe() {
         movieListViewModel.state.observe(viewLifecycleOwner,{state->
-
             adapter.update(state.movies)
         })
     }
