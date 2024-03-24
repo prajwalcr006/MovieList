@@ -5,6 +5,8 @@ import com.example.movielist.data.remote.MovieListApi
 import com.example.movielist.data.repository.MovieRepositoryImpl
 import com.example.movielist.domain.repository.MovieRepository
 import com.example.movielist.domain.use_case.GetMoviesUseCase
+import com.example.movielist.ui.AdopterClass
+import com.example.movielist.ui.ListFragment
 import com.example.movielist.ui.movie_list.MovieListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -25,9 +27,11 @@ val appModule = module {
         MovieRepositoryImpl(get())
     }
 
+
     factory {
         GetMoviesUseCase(get())
     }
+
 
     viewModel {
         MovieListViewModel(get())

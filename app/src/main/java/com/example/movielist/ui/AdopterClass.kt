@@ -7,9 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movielist.R
 import com.example.movielist.domain.model.MovieList
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.java.KoinJavaComponent.inject
 
-class AdopterClass(private var dataList: List<MovieList>, val itemClickListner:ItemClickListner): RecyclerView.Adapter<AdopterClass.ViewHolderClass>() {
-
+class AdopterClass(private var dataList: List<MovieList>,private val itemClickListner:ItemClickListner): RecyclerView.Adapter<AdopterClass.ViewHolderClass>(),KoinComponent {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
@@ -24,7 +26,6 @@ class AdopterClass(private var dataList: List<MovieList>, val itemClickListner:I
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem = dataList[position]
         holder.rvTitle.text = currentItem.title
-        holder.rvLanguage.text = currentItem.originalLanguage
         holder.itmView.setOnClickListener {
             itemClickListner.onItemClick(currentItem)
         }
@@ -37,7 +38,6 @@ class AdopterClass(private var dataList: List<MovieList>, val itemClickListner:I
 
     class ViewHolderClass(private val itemView: View): RecyclerView.ViewHolder(itemView) {
         val rvTitle: TextView = itemView.findViewById(R.id.title)
-        val rvLanguage: TextView = itemView.findViewById(R.id.original_language)
         val itmView = itemView
     }
 
