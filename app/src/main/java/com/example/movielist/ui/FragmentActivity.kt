@@ -1,12 +1,18 @@
 package com.example.movielist.ui
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,17 +23,30 @@ import com.example.movielist.domain.model.MovieList
 import com.example.movielist.ui.movie_list.MovieListViewModel
 import com.example.movielist.common.constants.DEFAULT_IMAGE_URL
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
 
 
-class FragmentActivity: AppCompatActivity() {
+class FragmentActivity: AppCompatActivity(),KoinComponent {
+
+    private val airPlaneModeReceiver: AirPlaneModeReceiver by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        registerReceiver(
+            airPlaneModeReceiver,
+            IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        )
 
+        setContentView(R.layout.activity_main)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(airPlaneModeReceiver)
     }
 
 }
@@ -129,3 +148,21 @@ class ListFragment: Fragment(),AdopterClass.ItemClickListner {
             .commit()
     }
 }
+
+class AirPlaneModeReceiver: BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        if(intent?.action == Intent.ACTION_AIRPLANE_MODE_CHANGED) {
+            val isTurnedOn = Settings.Global.getInt(
+                context?.contentResolver,
+                Settings.Global.AIRPLANE_MODE_ON
+            )!=0
+
+            if(isTurnedOn)
+                Toast.makeText(context,"Airplane mode turned on!!!",Toast.LENGTH_LONG).show()
+            else
+                Toast.makeText(context,"Airplane mode turned of",Toast.LENGTH_LONG).show()
+        }
+    }
+
+}
+

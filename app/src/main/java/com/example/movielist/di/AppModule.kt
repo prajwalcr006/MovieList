@@ -6,6 +6,7 @@ import com.example.movielist.data.repository.MovieRepositoryImpl
 import com.example.movielist.domain.repository.MovieRepository
 import com.example.movielist.domain.use_case.GetMoviesUseCase
 import com.example.movielist.ui.AdopterClass
+import com.example.movielist.ui.AirPlaneModeReceiver
 import com.example.movielist.ui.ListFragment
 import com.example.movielist.ui.movie_list.MovieListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -25,6 +26,10 @@ val appModule = module {
 
     single<MovieRepository> {
         MovieRepositoryImpl(get())
+    }
+
+    single {
+        AirPlaneModeReceiver()
     }
 
 
