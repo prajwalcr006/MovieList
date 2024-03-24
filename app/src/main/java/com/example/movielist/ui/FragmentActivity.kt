@@ -13,6 +13,7 @@ import androidx.fragment.app.ListFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movielist.R
+import com.example.movielist.databinding.DetailFragmentBinding
 import com.example.movielist.domain.model.MovieList
 import com.example.movielist.ui.movie_list.MovieListViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,29 +32,28 @@ class FragmentActivity: AppCompatActivity() {
 class DetailFragment: Fragment() {
 
     private lateinit var myParams: MovieList
+    private lateinit var binding: DetailFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.detail_fragment,container,false)
+    ): View {
+        binding = DetailFragmentBinding.inflate(inflater,container,false)
+        val view = binding.root
         myParams = arguments?.getParcelable<MovieList>("movieList")!!
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val title: TextView = view.findViewById(R.id.film_title)
-        val overview: TextView = view.findViewById(R.id.film_description)
-        val language: TextView = view.findViewById(R.id.film_language)
-        val releaseDate: TextView = view.findViewById(R.id.film_release_date)
-        val voteAverage: TextView = view.findViewById(R.id.film_vote_avg)
 
-        title.text = myParams.title
-        overview.text = myParams.overview
-        language.text = myParams.originalLanguage
-        releaseDate.text = myParams.releaseDate
-        voteAverage.text = myParams.voteAverage.toString()
+        binding.filmTitle.text = myParams.title
+        binding.filmDescription.text = myParams.overview
+        binding.filmLanguage.text = getString(R.string.language_text, myParams.originalLanguage)
+        binding.filmReleaseDate.text = getString(R.string.release_date, myParams.releaseDate)
+        binding.filmVoteAvg.text = getString(R.string.vote_avg, myParams.voteAverage.toString())
+
+
     }
 }
 
